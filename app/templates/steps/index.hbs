@@ -1,0 +1,45 @@
+{{!-- Page to list steps --}}
+<div class="content">
+  <h2 class="title">{{t (humanize 'steps')}}</h2>
+  <div class="actions">{{#link-to "steps.new" class="btn new" title="Create new item" tagName="button" }}Create{{/link-to}}</div>
+  {{#if model}}
+    <table>
+      <thead>
+        <tr>
+          <th class="properties__label">id</th>
+          {{sortable-table-header attribute="title" currentSort=sort}}
+{{sortable-table-header attribute="description" currentSort=sort}}
+{{sortable-table-header attribute="code" currentSort=sort}}
+{{sortable-table-header attribute="order" currentSort=sort}}
+{{sortable-table-header attribute="status" currentSort=sort}}
+
+          {{sortable-table-header attribute="pipeline" currentSort=sort}}
+          
+        </tr>
+      </thead>
+      <tbody>
+        {{#each model as |item|}}
+          {{#link-to "steps.show" item tagName='tr' }}
+              <td>{{handle-attribute model=item attribute='id' classes='properties__data'}}</td>
+            {{handle-attribute model=item attribute='title' tagName='td' classes='properties__data'}}
+            {{handle-attribute model=item attribute='description' tagName='td' classes='properties__data'}}
+            {{handle-attribute model=item attribute='code' tagName='td' classes='properties__data'}}
+            {{handle-attribute model=item attribute='order' tagName='td' classes='properties__data'}}
+            {{handle-attribute model=item attribute='status' tagName='td' classes='properties__data'}}
+            {{display-model-belongsto-relationship model=item.pipeline tagName='td' itemRoute='pipelines.show' configuredLabel='stringRep'}}
+
+          {{/link-to}}
+        {{/each}}
+      </tbody>
+    </table>
+
+    {{#if model.meta.pagination}}
+      {{pagination-component page=page numberOfItems=model.length total=model.meta.count links=model.meta.pagination}}
+    {{/if}}
+  {{else}}
+    <div class="empty">
+      No {{t (humanize 'steps')}} in the database.
+      Click on the <i class="fa fa-plus" aria-hidden="true"></i> button to create a new {{t (humanize "step")}}.
+    </div>
+  {{/if}}
+</div>

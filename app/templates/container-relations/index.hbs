@@ -1,0 +1,39 @@
+{{!-- Page to list container-relations --}}
+<div class="content">
+  <h2 class="title">{{t (humanize 'container-relations')}}</h2>
+  <div class="actions">{{#link-to "container-relations.new" class="btn new" title="Create new item" tagName="button" }}Create{{/link-to}}</div>
+  {{#if model}}
+    <table>
+      <thead>
+        <tr>
+          <th class="properties__label">id</th>
+          {{sortable-table-header attribute="index" currentSort=sort}}
+
+          {{sortable-table-header attribute="group" currentSort=sort}}
+{{sortable-table-header attribute="item" currentSort=sort}}
+          
+        </tr>
+      </thead>
+      <tbody>
+        {{#each model as |item|}}
+          {{#link-to "container-relations.show" item tagName='tr' }}
+              <td>{{handle-attribute model=item attribute='id' classes='properties__data'}}</td>
+            {{handle-attribute model=item attribute='index' tagName='td' classes='properties__data'}}
+            {{display-model-belongsto-relationship model=item.group tagName='td' itemRoute='container-groups.show' configuredLabel='stringRep'}}
+            {{display-model-belongsto-relationship model=item.item tagName='td' itemRoute='container-items.show' configuredLabel='stringRep'}}
+
+          {{/link-to}}
+        {{/each}}
+      </tbody>
+    </table>
+
+    {{#if model.meta.pagination}}
+      {{pagination-component page=page numberOfItems=model.length total=model.meta.count links=model.meta.pagination}}
+    {{/if}}
+  {{else}}
+    <div class="empty">
+      No {{t (humanize 'container-relations')}} in the database.
+      Click on the <i class="fa fa-plus" aria-hidden="true"></i> button to create a new {{t (humanize "container-relation")}}.
+    </div>
+  {{/if}}
+</div>

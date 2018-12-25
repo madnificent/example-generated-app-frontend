@@ -1,0 +1,40 @@
+{{!-- Page to create a new stack --}}
+<div class="new">
+  <h2 class="title">{{t (humanize 'New stack')}}</h2>
+
+  {{!--
+    Actions to save new stack
+    or delete new stack.
+  --}}
+  <div class="actions">
+    <button type="button" class="btn save" title="Save new stack" {{action 'save' model}}>Save</button>
+    <button type="button" class="btn cancel" title="Cancel" {{action 'cancel' model}}>Cancel</button>
+  </div>
+
+  {{!-- Table to show details of stack. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>title</td>
+<td align='middle'>{{handle-attribute model=model attribute='title' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>location</td>
+<td align='middle'>{{handle-attribute model=model attribute='location' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>icon</td>
+<td align='middle'>{{handle-attribute model=model attribute='icon' editable=true}}</td>
+      </tr>
+      <tr><td>dockerFile</td><td align='middle'>{{edit-belongs-to relName=model.dockerFile relType="docker-compose"}}</td></tr>
+      <tr><td>pipelineInstances</td><td align='middle'>{{edit-has-many relName=model.pipelineInstances relType="pipeline-instance"}}</td></tr>
+    </tbody>
+  </table>
+</div>

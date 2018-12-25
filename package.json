@@ -20,6 +20,7 @@
   "devDependencies": {
     "@ember/jquery": "^0.5.2",
     "@ember/optional-features": "^0.6.3",
+    "@lblod/ember-vo-webuniversum-data-table": "^0.2.10",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.1.0",
     "ember-changeset": "^1.6.0",
@@ -44,6 +45,7 @@
     "ember-qunit": "^3.4.1",
     "ember-resolver": "^5.0.1",
     "ember-source": "~3.5.0",
+    "ember-vo-webuniversum": "^0.7.0",
     "eslint-plugin-ember": "^5.2.0",
     "jquery-datetimepicker": "^2.5.20",
     "loader.js": "^4.7.0",

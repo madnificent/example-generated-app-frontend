@@ -1,0 +1,32 @@
+{{!-- Page to create a new container-group --}}
+<div class="new">
+  <h2 class="title">{{t (humanize 'New container-group')}}</h2>
+
+  {{!--
+    Actions to save new container-group
+    or delete new container-group.
+  --}}
+  <div class="actions">
+    <button type="button" class="btn save" title="Save new container-group" {{action 'save' model}}>Save</button>
+    <button type="button" class="btn cancel" title="Cancel" {{action 'cancel' model}}>Cancel</button>
+  </div>
+
+  {{!-- Table to show details of container-group. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>title</td>
+<td align='middle'>{{handle-attribute model=model attribute='title' editable=true}}</td>
+      </tr>
+      
+      <tr><td>relations</td><td align='middle'>{{edit-has-many relName=model.relations relType="container-relation"}}</td></tr>
+    </tbody>
+  </table>
+</div>

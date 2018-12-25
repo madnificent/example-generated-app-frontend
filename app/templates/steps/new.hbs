@@ -1,0 +1,48 @@
+{{!-- Page to create a new step --}}
+<div class="new">
+  <h2 class="title">{{t (humanize 'New step')}}</h2>
+
+  {{!--
+    Actions to save new step
+    or delete new step.
+  --}}
+  <div class="actions">
+    <button type="button" class="btn save" title="Save new step" {{action 'save' model}}>Save</button>
+    <button type="button" class="btn cancel" title="Cancel" {{action 'cancel' model}}>Cancel</button>
+  </div>
+
+  {{!-- Table to show details of step. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>title</td>
+<td align='middle'>{{handle-attribute model=model attribute='title' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>description</td>
+<td align='middle'>{{handle-attribute model=model attribute='description' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>code</td>
+<td align='middle'>{{handle-attribute model=model attribute='code' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>order</td>
+<td align='middle'>{{handle-attribute model=model attribute='order' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>status</td>
+<td align='middle'>{{handle-attribute model=model attribute='status' editable=true}}</td>
+      </tr>
+      <tr><td>pipeline</td><td align='middle'>{{edit-belongs-to relName=model.pipeline relType="pipeline"}}</td></tr>
+      
+    </tbody>
+  </table>
+</div>

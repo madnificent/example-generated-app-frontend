@@ -1,0 +1,46 @@
+{{!-- Page to create a new service --}}
+<div class="new">
+  <h2 class="title">{{t (humanize 'New service')}}</h2>
+
+  {{!--
+    Actions to save new service
+    or delete new service.
+  --}}
+  <div class="actions">
+    <button type="button" class="btn save" title="Save new service" {{action 'save' model}}>Save</button>
+    <button type="button" class="btn cancel" title="Cancel" {{action 'cancel' model}}>Cancel</button>
+  </div>
+
+  {{!-- Table to show details of service. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>name</td>
+<td align='middle'>{{handle-attribute model=model attribute='name' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>scaling</td>
+<td align='middle'>{{handle-attribute model=model attribute='scaling' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>requestedScaling</td>
+<td align='middle'>{{handle-attribute model=model attribute='requestedScaling' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>restartRequested</td>
+<td align='middle'>{{handle-attribute model=model attribute='restartRequested' editable=true}}</td>
+      </tr>
+      <tr><td>pipelineInstance</td><td align='middle'>{{edit-belongs-to relName=model.pipelineInstance relType="pipeline-instance"}}</td></tr>
+      <tr><td>status</td><td align='middle'>{{edit-belongs-to relName=model.status relType="status"}}</td></tr>
+      <tr><td>requestedStatus</td><td align='middle'>{{edit-belongs-to relName=model.requestedStatus relType="status"}}</td></tr>
+      
+    </tbody>
+  </table>
+</div>

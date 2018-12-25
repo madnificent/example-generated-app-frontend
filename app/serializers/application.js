@@ -1,5 +1,6 @@
 import DS from 'ember-data';
-import PaginationSerializer from '../mixins/pagination-serializer';
+import DataTableSerializerMixin from 'ember-data-table/mixins/serializer';
 
-export default DS.JSONAPISerializer.extend(PaginationSerializer, {
+export default DS.JSONAPISerializer.extend(DataTableSerializerMixin, {
+
 });

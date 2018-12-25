@@ -1,0 +1,47 @@
+{{!-- Page to list pipeline-instances --}}
+<div class="content">
+  <h2 class="title">{{t (humanize 'pipeline-instances')}}</h2>
+  <div class="actions">{{#link-to "pipeline-instances.new" class="btn new" title="Create new item" tagName="button" }}Create{{/link-to}}</div>
+  {{#if model}}
+    <table>
+      <thead>
+        <tr>
+          <th class="properties__label">id</th>
+          {{sortable-table-header attribute="title" currentSort=sort}}
+{{sortable-table-header attribute="icon" currentSort=sort}}
+{{sortable-table-header attribute="restartRequested" currentSort=sort}}
+{{sortable-table-header attribute="updateRequested" currentSort=sort}}
+
+          {{sortable-table-header attribute="stack" currentSort=sort}}
+{{sortable-table-header attribute="status" currentSort=sort}}
+{{sortable-table-header attribute="requestedStatus" currentSort=sort}}
+          {{sortable-table-header attribute="services" currentSort=sort}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each model as |item|}}
+          {{#link-to "pipeline-instances.show" item tagName='tr' }}
+              <td>{{handle-attribute model=item attribute='id' classes='properties__data'}}</td>
+            {{handle-attribute model=item attribute='title' tagName='td' classes='properties__data'}}
+            {{handle-attribute model=item attribute='icon' tagName='td' classes='properties__data'}}
+            {{handle-attribute model=item attribute='restartRequested' tagName='td' classes='properties__data'}}
+            {{handle-attribute model=item attribute='updateRequested' tagName='td' classes='properties__data'}}
+            {{display-model-belongsto-relationship model=item.stack tagName='td' itemRoute='stacks.show' configuredLabel='stringRep'}}
+            {{display-model-belongsto-relationship model=item.status tagName='td' itemRoute='statuses.show' configuredLabel='stringRep'}}
+            {{display-model-belongsto-relationship model=item.requestedStatus tagName='td' itemRoute='statuses.show' configuredLabel='stringRep'}}
+            {{display-model-hasmany-relationship   model=item.services tagName='td' itemRoute='services.show' configuredLabel='stringRep'}}
+          {{/link-to}}
+        {{/each}}
+      </tbody>
+    </table>
+
+    {{#if model.meta.pagination}}
+      {{pagination-component page=page numberOfItems=model.length total=model.meta.count links=model.meta.pagination}}
+    {{/if}}
+  {{else}}
+    <div class="empty">
+      No {{t (humanize 'pipeline-instances')}} in the database.
+      Click on the <i class="fa fa-plus" aria-hidden="true"></i> button to create a new {{t (humanize "pipeline-instance")}}.
+    </div>
+  {{/if}}
+</div>

@@ -1,0 +1,46 @@
+{{!-- Page to create a new pipeline-instance --}}
+<div class="new">
+  <h2 class="title">{{t (humanize 'New pipeline-instance')}}</h2>
+
+  {{!--
+    Actions to save new pipeline-instance
+    or delete new pipeline-instance.
+  --}}
+  <div class="actions">
+    <button type="button" class="btn save" title="Save new pipeline-instance" {{action 'save' model}}>Save</button>
+    <button type="button" class="btn cancel" title="Cancel" {{action 'cancel' model}}>Cancel</button>
+  </div>
+
+  {{!-- Table to show details of pipeline-instance. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>title</td>
+<td align='middle'>{{handle-attribute model=model attribute='title' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>icon</td>
+<td align='middle'>{{handle-attribute model=model attribute='icon' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>restartRequested</td>
+<td align='middle'>{{handle-attribute model=model attribute='restartRequested' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>updateRequested</td>
+<td align='middle'>{{handle-attribute model=model attribute='updateRequested' editable=true}}</td>
+      </tr>
+      <tr><td>stack</td><td align='middle'>{{edit-belongs-to relName=model.stack relType="stack"}}</td></tr>
+      <tr><td>status</td><td align='middle'>{{edit-belongs-to relName=model.status relType="status"}}</td></tr>
+      <tr><td>requestedStatus</td><td align='middle'>{{edit-belongs-to relName=model.requestedStatus relType="status"}}</td></tr>
+      <tr><td>services</td><td align='middle'>{{edit-has-many relName=model.services relType="service"}}</td></tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,60 @@
+{{!-- Page to show details of services --}}
+<div class="details">
+  <h2 class="title">{{t (humanize 'service details')}}</h2>
+
+  {{!--
+    Actions to go back to the list-view or edit service
+    if it's an editable application.
+  --}}
+  <div class="actions">
+    {{#link-to "services" class="btn back" title="Return to list" tagName='button'}}Return to the list{{/link-to}}
+    {{#link-to "services.edit" model class="btn edit" title="Edit this item" tagName="button"}}Edit{{/link-to}}
+  </div>
+
+  {{!-- Table to show details of service. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>{{t "Attribute"}}</th>
+        <th>{{t "Data"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating row for id --}}
+      <tr>
+        <td class="properties__label">{{t "id"}}</td>
+        {{handle-attribute model=model attribute='id' tagName='td' classes='properties__data'}}
+      </tr>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>{{t 'name'}}</td>
+        {{handle-attribute model=model attribute='name' tagName='td' classes='properties__data'}}
+      </tr>
+      <tr>
+        <td>{{t 'scaling'}}</td>
+        {{handle-attribute model=model attribute='scaling' tagName='td' classes='properties__data'}}
+      </tr>
+      <tr>
+        <td>{{t 'requestedScaling'}}</td>
+        {{handle-attribute model=model attribute='requestedScaling' tagName='td' classes='properties__data'}}
+      </tr>
+      <tr>
+        <td>{{t 'restartRequested'}}</td>
+        {{handle-attribute model=model attribute='restartRequested' tagName='td' classes='properties__data'}}
+      </tr>
+      <tr>
+        <td class="properties__label">{{t 'pipelineInstance'}}</td>
+       {{display-model-belongsto-relationship model=model.pipelineInstance itemRoute='pipeline-instances.show' configuredLabel='stringRep' tagName="td" classes="properties__data"}}
+      </tr>
+      <tr>
+        <td class="properties__label">{{t 'status'}}</td>
+       {{display-model-belongsto-relationship model=model.status itemRoute='statuses.show' configuredLabel='stringRep' tagName="td" classes="properties__data"}}
+      </tr>
+      <tr>
+        <td class="properties__label">{{t 'requestedStatus'}}</td>
+       {{display-model-belongsto-relationship model=model.requestedStatus itemRoute='statuses.show' configuredLabel='stringRep' tagName="td" classes="properties__data"}}
+      </tr>
+
+    </tbody>
+  </table>
+</div>

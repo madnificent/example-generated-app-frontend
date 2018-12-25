@@ -1,0 +1,36 @@
+{{!-- Page to create a new docker-compose --}}
+<div class="new">
+  <h2 class="title">{{t (humanize 'New docker-compose')}}</h2>
+
+  {{!--
+    Actions to save new docker-compose
+    or delete new docker-compose.
+  --}}
+  <div class="actions">
+    <button type="button" class="btn save" title="Save new docker-compose" {{action 'save' model}}>Save</button>
+    <button type="button" class="btn cancel" title="Cancel" {{action 'cancel' model}}>Cancel</button>
+  </div>
+
+  {{!-- Table to show details of docker-compose. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>text</td>
+<td align='middle'>{{handle-attribute model=model attribute='text' editable=true}}</td>
+      </tr>
+      <tr>
+        <td>title</td>
+<td align='middle'>{{handle-attribute model=model attribute='title' editable=true}}</td>
+      </tr>
+      <tr><td>relatedWorkflows</td><td align='middle'>{{edit-belongs-to relName=model.relatedWorkflows relType="pipeline"}}</td></tr>
+      <tr><td>relatedStacks</td><td align='middle'>{{edit-has-many relName=model.relatedStacks relType="stack"}}</td></tr>
+    </tbody>
+  </table>
+</div>

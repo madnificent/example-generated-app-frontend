@@ -1,0 +1,32 @@
+{{!-- Page to create a new status --}}
+<div class="new">
+  <h2 class="title">{{t (humanize 'New status')}}</h2>
+
+  {{!--
+    Actions to save new status
+    or delete new status.
+  --}}
+  <div class="actions">
+    <button type="button" class="btn save" title="Save new status" {{action 'save' model}}>Save</button>
+    <button type="button" class="btn cancel" title="Cancel" {{action 'cancel' model}}>Cancel</button>
+  </div>
+
+  {{!-- Table to show details of status. --}}
+  <table>
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- Creating rows for attributes depending on the type of property --}}
+            <tr>
+        <td>title</td>
+<td align='middle'>{{handle-attribute model=model attribute='title' editable=true}}</td>
+      </tr>
+      
+      <tr><td>pipelineInstances</td><td align='middle'>{{edit-has-many relName=model.pipelineInstances relType="pipeline-instance"}}</td></tr>
+    </tbody>
+  </table>
+</div>
