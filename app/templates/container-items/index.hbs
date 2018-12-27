@@ -1,41 +1,35 @@
-{{!-- Page to list container-items --}}
+{{!-- Page to list pipelines --}}
 <div class="content">
   <h2 class="title">{{t (humanize 'container-items')}}</h2>
-  <div class="actions">{{#link-to "container-items.new" class="btn new" title="Create new item" tagName="button" }}Create{{/link-to}}</div>
-  {{#if model}}
-    <table>
-      <thead>
-        <tr>
-          <th class="properties__label">id</th>
-          {{sortable-table-header attribute="title" currentSort=sort}}
-{{sortable-table-header attribute="repository" currentSort=sort}}
-{{sortable-table-header attribute="dockerText" currentSort=sort}}
-
-          
-          {{sortable-table-header attribute="relations" currentSort=sort}}
-        </tr>
-      </thead>
-      <tbody>
-        {{#each model as |item|}}
-          {{#link-to "container-items.show" item tagName='tr' }}
-              <td>{{handle-attribute model=item attribute='id' classes='properties__data'}}</td>
-            {{handle-attribute model=item attribute='title' tagName='td' classes='properties__data'}}
-            {{handle-attribute model=item attribute='repository' tagName='td' classes='properties__data'}}
-            {{handle-attribute model=item attribute='dockerText' tagName='td' classes='properties__data'}}
-
-            {{display-model-hasmany-relationship   model=item.relations tagName='td' itemRoute='container-relations.show' configuredLabel='stringRep'}}
-          {{/link-to}}
-        {{/each}}
-      </tbody>
-    </table>
-
-    {{#if model.meta.pagination}}
-      {{pagination-component page=page numberOfItems=model.length total=model.meta.count links=model.meta.pagination}}
-    {{/if}}
-  {{else}}
-    <div class="empty">
-      No {{t (humanize 'container-items')}} in the database.
-      Click on the <i class="fa fa-plus" aria-hidden="true"></i> button to create a new {{t (humanize "container-item")}}.
-    </div>
-  {{/if}}
+  <div class="actions">{{#link-to "container-items.new" class="btn new" title=(t "Create new item") tagName="button" }}{{t 'Create'}}{{/link-to}}</div>
+  {{#data-table
+     content=model
+     isLoading=isLoadingModel
+     filter=filter
+     sort=sort
+     page=page
+     size=size
+     as |t|}}
+    {{#t.content as |c|}}
+      {{#c.header}}
+        {{!-- th-sortable field='title' currentSorting=sort label=(t 'title') --}}
+        <th>title</th>
+{{!-- th-sortable field='repository' currentSorting=sort label=(t 'repository') --}}
+        <th>repository</th>
+{{!-- th-sortable field='dockerText' currentSorting=sort label=(t 'dockerText') --}}
+        <th>dockerText</th>
+        
+        <th>{{!-- contains detail view action --}}</th>
+        <th>{{!-- contains detail edit action --}}</th>
+      {{/c.header}}
+      {{#c.body as |row|}}
+        <td>{{row.title}}</td>
+<td>{{row.repository}}</td>
+<td>{{row.dockerText}}</td>
+        
+        <td>{{link-to (t 'Open') 'container-items.show' row}}</td>
+        <td>{{link-to (t 'Edit') 'container-items.edit' row}}</td>
+      {{/c.body}}
+    {{/t.content}}
+  {{/data-table}}
 </div>

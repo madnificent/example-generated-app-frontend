@@ -1,39 +1,33 @@
 {{!-- Page to list pipelines --}}
 <div class="content">
   <h2 class="title">{{t (humanize 'pipelines')}}</h2>
-  <div class="actions">{{#link-to "pipelines.new" class="btn new" title="Create new item" tagName="button" }}Create{{/link-to}}</div>
-  {{#if model}}
-    <table>
-      <thead>
-        <tr>
-          <th class="properties__label">id</th>
-          {{sortable-table-header attribute="title" currentSort=sort}}
-{{sortable-table-header attribute="description" currentSort=sort}}
-
-          {{sortable-table-header attribute="dockerFile" currentSort=sort}}
-          {{sortable-table-header attribute="steps" currentSort=sort}}
-        </tr>
-      </thead>
-      <tbody>
-        {{#each model as |item|}}
-          {{#link-to "pipelines.show" item tagName='tr' }}
-              <td>{{handle-attribute model=item attribute='id' classes='properties__data'}}</td>
-            {{handle-attribute model=item attribute='title' tagName='td' classes='properties__data'}}
-            {{handle-attribute model=item attribute='description' tagName='td' classes='properties__data'}}
-            {{display-model-belongsto-relationship model=item.dockerFile tagName='td' itemRoute='docker-composes.show' configuredLabel='stringRep'}}
-            {{display-model-hasmany-relationship   model=item.steps tagName='td' itemRoute='steps.show' configuredLabel='stringRep'}}
-          {{/link-to}}
-        {{/each}}
-      </tbody>
-    </table>
-
-    {{#if model.meta.pagination}}
-      {{pagination-component page=page numberOfItems=model.length total=model.meta.count links=model.meta.pagination}}
-    {{/if}}
-  {{else}}
-    <div class="empty">
-      No {{t (humanize 'pipelines')}} in the database.
-      Click on the <i class="fa fa-plus" aria-hidden="true"></i> button to create a new {{t (humanize "pipeline")}}.
-    </div>
-  {{/if}}
+  <div class="actions">{{#link-to "pipelines.new" class="btn new" title=(t "Create new item") tagName="button" }}{{t 'Create'}}{{/link-to}}</div>
+  {{#data-table
+     content=model
+     isLoading=isLoadingModel
+     filter=filter
+     sort=sort
+     page=page
+     size=size
+     as |t|}}
+    {{#t.content as |c|}}
+      {{#c.header}}
+        {{!-- th-sortable field='title' currentSorting=sort label=(t 'title') --}}
+        <th>title</th>
+{{!-- th-sortable field='description' currentSorting=sort label=(t 'description') --}}
+        <th>description</th>
+        {{!-- th-sortable field='dockerFile' currentSorting=sort label=(t 'dockerFile') --}}
+        <th>{{t 'dockerFile'}}</th>
+        <th>{{!-- contains detail view action --}}</th>
+        <th>{{!-- contains detail edit action --}}</th>
+      {{/c.header}}
+      {{#c.body as |row|}}
+        <td>{{row.title}}</td>
+<td>{{row.description}}</td>
+        <td>{{display-model-belongsto-relationship model=row.dockerFile itemRoute='docker-composes.show' configuredLabel='stringRep'}}</td>
+        <td>{{link-to (t 'Open') 'pipelines.show' row}}</td>
+        <td>{{link-to (t 'Edit') 'pipelines.edit' row}}</td>
+      {{/c.body}}
+    {{/t.content}}
+  {{/data-table}}
 </div>

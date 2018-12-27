@@ -1,39 +1,33 @@
-{{!-- Page to list docker-composes --}}
+{{!-- Page to list pipelines --}}
 <div class="content">
   <h2 class="title">{{t (humanize 'docker-composes')}}</h2>
-  <div class="actions">{{#link-to "docker-composes.new" class="btn new" title="Create new item" tagName="button" }}Create{{/link-to}}</div>
-  {{#if model}}
-    <table>
-      <thead>
-        <tr>
-          <th class="properties__label">id</th>
-          {{sortable-table-header attribute="text" currentSort=sort}}
-{{sortable-table-header attribute="title" currentSort=sort}}
-
-          {{sortable-table-header attribute="relatedWorkflows" currentSort=sort}}
-          {{sortable-table-header attribute="relatedStacks" currentSort=sort}}
-        </tr>
-      </thead>
-      <tbody>
-        {{#each model as |item|}}
-          {{#link-to "docker-composes.show" item tagName='tr' }}
-              <td>{{handle-attribute model=item attribute='id' classes='properties__data'}}</td>
-            {{handle-attribute model=item attribute='text' tagName='td' classes='properties__data'}}
-            {{handle-attribute model=item attribute='title' tagName='td' classes='properties__data'}}
-            {{display-model-belongsto-relationship model=item.relatedWorkflows tagName='td' itemRoute='pipelines.show' configuredLabel='stringRep'}}
-            {{display-model-hasmany-relationship   model=item.relatedStacks tagName='td' itemRoute='stacks.show' configuredLabel='stringRep'}}
-          {{/link-to}}
-        {{/each}}
-      </tbody>
-    </table>
-
-    {{#if model.meta.pagination}}
-      {{pagination-component page=page numberOfItems=model.length total=model.meta.count links=model.meta.pagination}}
-    {{/if}}
-  {{else}}
-    <div class="empty">
-      No {{t (humanize 'docker-composes')}} in the database.
-      Click on the <i class="fa fa-plus" aria-hidden="true"></i> button to create a new {{t (humanize "docker-compose")}}.
-    </div>
-  {{/if}}
+  <div class="actions">{{#link-to "docker-composes.new" class="btn new" title=(t "Create new item") tagName="button" }}{{t 'Create'}}{{/link-to}}</div>
+  {{#data-table
+     content=model
+     isLoading=isLoadingModel
+     filter=filter
+     sort=sort
+     page=page
+     size=size
+     as |t|}}
+    {{#t.content as |c|}}
+      {{#c.header}}
+        {{!-- th-sortable field='text' currentSorting=sort label=(t 'text') --}}
+        <th>text</th>
+{{!-- th-sortable field='title' currentSorting=sort label=(t 'title') --}}
+        <th>title</th>
+        {{!-- th-sortable field='relatedWorkflows' currentSorting=sort label=(t 'relatedWorkflows') --}}
+        <th>{{t 'relatedWorkflows'}}</th>
+        <th>{{!-- contains detail view action --}}</th>
+        <th>{{!-- contains detail edit action --}}</th>
+      {{/c.header}}
+      {{#c.body as |row|}}
+        <td>{{row.text}}</td>
+<td>{{row.title}}</td>
+        <td>{{display-model-belongsto-relationship model=row.relatedWorkflows itemRoute='pipelines.show' configuredLabel='stringRep'}}</td>
+        <td>{{link-to (t 'Open') 'docker-composes.show' row}}</td>
+        <td>{{link-to (t 'Edit') 'docker-composes.edit' row}}</td>
+      {{/c.body}}
+    {{/t.content}}
+  {{/data-table}}
 </div>
